@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        input[type="number"] {
+            width: 50px;
+        }
+        button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Matrix Operations (3x3)</h2>
+    <div>
+        <h3>Matrix 1</h3>
+        <table>
+            <tr>
+                <td><input type="number" id="m1r1c1"></td>
+                <td><input type="number" id="m1r1c2"></td>
+                <td><input type="number" id="m1r1c3"></td>
+            </tr>
+            <tr>
+                <td><input type="number" id="m1r2c1"></td>
+                <td><input type="number" id="m1r2c2"></td>
+                <td><input type="number" id="m1r2c3"></td>
+            </tr>
+            <tr>
+                <td><input type="number" id="m1r3c1"></td>
+                <td><input type="number" id="m1r3c2"></td>
+                <td><input type="number" id="m1r3c3"></td>
+            </tr>
+        </table>
+
+        <h3>Matrix 2</h3>
+        <table>
+            <tr>
+                <td><input type="number" id="m2r1c1"></td>
+                <td><input type="number" id="m2r1c2"></td>
+                <td><input type="number" id="m2r1c3"></td>
+            </tr>
+            <tr>
+                <td><input type="number" id="m2r2c1"></td>
+                <td><input type="number" id="m2r2c2"></td>
+                <td><input type="number" id="m2r2c3"></td>
+            </tr>
+            <tr>
+                <td><input type="number" id="m2r3c1"></td>
+                <td><input type="number" id="m2r3c2"></td>
+                <td><input type="number" id="m2r3c3"></td>
+            </tr>
+        </table>
+
+        <button onclick="addMatrices()">Add Matrices</button>
+        <button onclick="multiplyMatrices()">Multiply Matrices</button>
+        
+        <h3>Result</h3>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function getMatrix(matrixId) {
+            let matrix = [];
+            for (let row = 1; row <= 3; row++) {
+                let matrixRow = [];
+                for (let col = 1; col <= 3; col++) {
+                    let value = document.getElementById(matrixId + 'r' + row + 'c' + col).value;
+                    matrixRow.push(parseInt(value));
+                }
+                matrix.push(matrixRow);
+            }
+            return matrix;
+        }
+
+        function displayMatrix(matrix) {
+            let resultDiv = document.getElementById('result');
+            let resultHtml = '<table>';
+            matrix.forEach(row => {
+                resultHtml += '<tr>';
+                row.forEach(value => {
+                    resultHtml += '<td>' + value + '</td>';
+                });
+                resultHtml += '</tr>';
+            });
+            resultHtml += '</table>';
+            resultDiv.innerHTML = resultHtml;
+        }
+
+        function addMatrices() {
+            let matrix1 = getMatrix('m1');
+            let matrix2 = getMatrix('m2');
+            let result = [];
+
+            for (let i = 0; i < 3; i++) {
+                let row = [];
+                for (let j = 0; j < 3; j++) {
+                    row.push(matrix1[i][j] + matrix2[i][j]);
+                }
+                result.push(row);
+            }
+
+            displayMatrix(result);
+        }
+
+        function multiplyMatrices() {
+            let matrix1 = getMatrix('m1');
+            let matrix2 = getMatrix('m2');
+            let result = [];
+
+            for (let i = 0; i < 3; i++) {
+                let row = [];
+                for (let j = 0; j < 3; j++) {
+                    let sum = 0;
+                    for (let k = 0; k < 3; k++) {
+                        sum += matrix1[i][k] * matrix2[k][j];
+                    }
+                    row.push(sum);
+                }
+                result.push(row);
+            }
+
+            displayMatrix(result);
+        }
+    </script>
+</body>
+</html>
